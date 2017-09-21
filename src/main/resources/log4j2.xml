@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+    <Appenders>
+        <Console name="STDOUT" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"></PatternLayout>
+        </Console>
+        <!-- 建议用bufferSize,减少频繁写操作-->
+        <NoSql name="mongoAppender" bufferSize="10">
+            <MongoDb databaseName="test" collectionName="log4j2" server="127.0.0.1" port="27017" userName="lai" password="root"></MongoDb>
+        </NoSql>
+    </Appenders>
+    <Loggers>
+        <Logger name="mongologger" level="info">
+            <appender-ref ref="mongoAppender"></appender-ref>
+        </Logger>
+        <Logger name="org" level="info">
+            <appender-ref ref="mongoAppender"></appender-ref>
+            <appender-ref ref="STDOUT"></appender-ref>
+        </Logger>
+        <Root level="info">
+            <appender-ref ref="STDOUT"></appender-ref>
+        </Root>
+    </Loggers>
+</Configuration>
